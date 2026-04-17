@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VyaparSetu — Bharat's B2B Credit Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0f;
+  --paper: #f5f3ee;
+  --jade: #00c896;
+  --jade-dark: #00a578;
+  --jade-glow: rgba(0,200,150,0.15);
+  --saffron: #ff8c00;
+  --crimson: #e63946;
+  --mist: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.1);
+  --text-soft: rgba(255,255,255,0.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#070710;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* NOISE TEXTURE */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.4;
+}
+
+/* GRID LINES */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(0,200,150,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,150,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* GLOW ORBS */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+  z-index:0;
+}
+.orb-1{width:600px;height:600px;background:rgba(0,200,150,0.12);top:-200px;left:-100px;}
+.orb-2{width:500px;height:500px;background:rgba(255,140,0,0.07);bottom:-100px;right:-100px;}
+.orb-3{width:300px;height:300px;background:rgba(0,120,255,0.08);top:50%;left:50%;}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  padding:0 3rem;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(7,7,16,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-0.5px;
+}
+.nav-logo span{color:var(--jade);}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{
+  color:var(--text-soft);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:500;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:#fff;}
+.nav-cta{
+  background:var(--jade);
+  color:#000;
+  padding:10px 22px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  transition:all 0.2s;
+  font-family:'Syne',sans-serif;
+}
+.nav-cta:hover{background:#00e0a8;transform:translateY(-1px);}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:120px 2rem 6rem;
+  position:relative;
+  z-index:1;
+  text-align:center;
+}
+
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(0,200,150,0.1);
+  border:1px solid rgba(0,200,150,0.25);
+  color:var(--jade);
+  padding:6px 16px;
+  border-radius:100px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:2rem;
+  animation:fadeUp 0.8s ease both;
+}
+.hero-eyebrow::before{
+  content:'';
+  width:6px;height:6px;
+  background:var(--jade);
+  border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(44px,7vw,88px);
+  font-weight:800;
+  line-height:1.0;
+  letter-spacing:-3px;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.8s ease 0.1s both;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#00c896 0%,#00d4ff 50%,#00c896 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% center;}}
+
+.hero-sub{
+  max-width:560px;
+  font-size:18px;
+  line-height:1.7;
+  color:var(--text-soft);
+  margin-bottom:3rem;
+  font-weight:300;
+  animation:fadeUp 0.8s ease 0.2s both;
+}
+
+.hero-actions{
+  display:flex;
+  gap:1rem;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  animation:fadeUp 0.8s ease 0.3s both;
+}
+.btn-primary{
+  background:var(--jade);
+  color:#000;
+  padding:16px 36px;
+  border-radius:10px;
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  font-weight:800;
+  text-decoration:none;
+  transition:all 0.25s;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 0 40px rgba(0,200,150,0.3);
+}
+.btn-primary:hover{background:#00e0a8;transform:translateY(-2px);box-shadow:0 0 60px rgba(0,200,150,0.4);}
+.btn-secondary{
+  background:transparent;
+  color:#fff;
+  padding:16px 36px;
+  border-radius:10px;
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  font-weight:700;
+  text-decoration:none;
+  border:1px solid var(--border);
+  transition:all 0.25s;
+}
+.btn-secondary:hover{background:var(--mist);border-color:rgba(255,255,255,0.2);}
+
+/* TICKER */
+.ticker-wrap{
+  width:100%;
+  overflow:hidden;
+  padding:1rem 0;
+  background:rgba(0,200,150,0.04);
+  border-top:1px solid rgba(0,200,150,0.1);
+  border-bottom:1px solid rgba(0,200,150,0.1);
+  margin:2rem 0 0;
+  position:relative;
+  z-index:1;
+}
+.ticker{
+  display:flex;
+  gap:3rem;
+  animation:ticker 25s linear infinite;
+  white-space:nowrap;
+  width:max-content;
+}
+.ticker-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:var(--text-soft);
+  font-weight:500;
+}
+.ticker-item strong{color:var(--jade);}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%)}}
+
+/* STATS BAR */
+.stats-bar{
+  padding:5rem 3rem;
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;z-index:1;
+}
+.stat-item{
+  padding:2.5rem 2rem;
+  background:#0a0a14;
+  text-align:center;
+  transition:background 0.3s;
+}
+.stat-item:hover{background:#0d0d1a;}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:48px;
+  font-weight:800;
+  color:var(--jade);
+  letter-spacing:-2px;
+  line-height:1;
+  margin-bottom:8px;
+}
+.stat-desc{font-size:13px;color:var(--text-soft);font-weight:400;line-height:1.5;}
+
+/* SECTION */
+section{
+  padding:6rem 3rem;
+  max-width:1200px;
+  margin:0 auto;
+  position:relative;z-index:1;
+}
+.section-label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--jade);
+  text-transform:uppercase;
+  letter-spacing:0.15em;
+  margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:800;
+  letter-spacing:-2px;
+  line-height:1.1;
+  margin-bottom:1.5rem;
+}
+
+/* HOW IT WORKS */
+.flow-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  margin-top:3rem;
+}
+.flow-item{
+  padding:2.5rem 2rem;
+  background:#0a0a14;
+  position:relative;
+  transition:background 0.3s;
+}
+.flow-item:hover{background:#0d0d1a;}
+.flow-num{
+  font-family:'Syne',sans-serif;
+  font-size:56px;
+  font-weight:800;
+  color:rgba(0,200,150,0.12);
+  line-height:1;
+  margin-bottom:1rem;
+  position:absolute;
+  top:1.5rem;right:1.5rem;
+}
+.flow-icon{
+  font-size:32px;
+  margin-bottom:1.2rem;
+  display:block;
+}
+.flow-title{
+  font-family:'Syne',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:0.75rem;
+}
+.flow-text{font-size:14px;color:var(--text-soft);line-height:1.7;}
+
+/* USER TYPES */
+.user-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.user-card{
+  border-radius:20px;
+  padding:3rem;
+  border:1px solid var(--border);
+  background:#0a0a14;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.3s;
+}
+.user-card:hover{transform:translateY(-4px);border-color:rgba(0,200,150,0.3);}
+.user-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+}
+.user-card.vendor::before{background:linear-gradient(90deg,var(--jade),#00d4ff);}
+.user-card.kirana::before{background:linear-gradient(90deg,var(--saffron),#ff4757);}
+.user-card-icon{
+  font-size:40px;
+  margin-bottom:1.5rem;
+  display:block;
+}
+.user-card-title{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:0.75rem;
+}
+.user-card-sub{
+  font-size:14px;
+  color:var(--text-soft);
+  margin-bottom:2rem;
+  line-height:1.7;
+}
+.user-card-features{list-style:none;}
+.user-card-features li{
+  font-size:13px;
+  color:rgba(255,255,255,0.7);
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.user-card-features li:last-child{border-bottom:none;}
+.check{color:var(--jade);font-weight:700;font-size:16px;}
+.user-card-cta{
+  display:inline-block;
+  margin-top:2rem;
+  padding:12px 28px;
+  border-radius:8px;
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.user-card.vendor .user-card-cta{background:var(--jade);color:#000;}
+.user-card.vendor .user-card-cta:hover{background:#00e0a8;}
+.user-card.kirana .user-card-cta{background:var(--saffron);color:#000;}
+.user-card.kirana .user-card-cta:hover{background:#ff9d1a;}
+
+/* FEATURE MARQUEE */
+.feature-strip{
+  padding:3rem 0;
+  position:relative;z-index:1;
+  overflow:hidden;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.feature-scroll{
+  display:flex;
+  gap:4rem;
+  animation:ticker 35s linear infinite;
+  width:max-content;
+}
+.feature-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:'Syne',sans-serif;
+  font-size:18px;
+  font-weight:700;
+  white-space:nowrap;
+  opacity:0.5;
+}
+.feature-item::before{
+  content:'◆';
+  color:var(--jade);
+  font-size:12px;
+}
+
+/* SOCIAL PROOF */
+.proof-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  margin-top:3rem;
+}
+.proof-card{
+  background:#0a0a14;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:2rem;
+}
+.proof-stars{color:var(--saffron);font-size:14px;margin-bottom:1rem;letter-spacing:2px;}
+.proof-text{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.5rem;}
+.proof-author{display:flex;align-items:center;gap:12px;}
+.proof-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--jade),#00d4ff);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#000;
+}
+.proof-name{font-size:14px;font-weight:600;}
+.proof-role{font-size:12px;color:var(--text-soft);}
+
+/* CTA SECTION */
+.cta-section{
+  text-align:center;
+  padding:8rem 2rem;
+  position:relative;z-index:1;
+}
+.cta-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,200,150,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:3rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;z-index:1;
+}
+.footer-logo{
+  font-family:'Syne',sans-serif;
+  font-size:18px;
+  font-weight:800;
+}
+.footer-logo span{color:var(--jade);}
+.footer-note{font-size:13px;color:var(--text-soft);}
+.footer-tag{
+  background:rgba(0,200,150,0.1);
+  color:var(--jade);
+  font-size:12px;
+  font-weight:700;
+  padding:4px 12px;
+  border-radius:100px;
+  border:1px solid rgba(0,200,150,0.2);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .flow-grid{grid-template-columns:1fr;}
+  .user-grid{grid-template-columns:1fr;}
+  .proof-grid{grid-template-columns:1fr;}
+  section{padding:4rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav>
+  <div class="nav-logo">Vyapar<span>Setu</span></div>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#network">Network</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div style="display:flex;gap:1rem;align-items:center;">
+    <a href="login.html" style="color:var(--text-soft);text-decoration:none;font-size:14px;font-weight:500;">Sign In</a>
+    <a href="register.html" class="nav-cta">Get Started →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">🇮🇳 &nbsp;Powering Bharat's 6.19 Crore MSMEs</div>
+  <h1>Credit Scores<br>for <em>Invisible</em><br>Businesses</h1>
+  <p class="hero-sub">VyaparSetu extracts B2B trade intelligence, GST flow & UPI velocity to unlock institutional credit for businesses with zero banking history.</p>
+  <div class="hero-actions">
+    <a href="register.html" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Start Free Assessment
+    </a>
+    <a href="marketplace.html" class="btn-secondary">Explore Network</a>
+  </div>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><strong>₹2.3L Cr</strong> Credit Deployed</div>
+    <div class="ticker-item"><strong>47,000+</strong> Businesses Assessed</div>
+    <div class="ticker-item"><strong>89%</strong> Approval Rate</div>
+    <div class="ticker-item"><strong>90 Seconds</strong> Credit Decision</div>
+    <div class="ticker-item"><strong>0</strong> Collateral Required</div>
+    <div class="ticker-item"><strong>18 NBFC</strong> Partner Network</div>
+    <div class="ticker-item"><strong>₹2.3L Cr</strong> Credit Deployed</div>
+    <div class="ticker-item"><strong>47,000+</strong> Businesses Assessed</div>
+    <div class="ticker-item"><strong>89%</strong> Approval Rate</div>
+    <div class="ticker-item"><strong>90 Seconds</strong> Credit Decision</div>
+    <div class="ticker-item"><strong>0</strong> Collateral Required</div>
+    <div class="ticker-item"><strong>18 NBFC</strong> Partner Network</div>
+  </div>
+</div>
+
+<div style="padding:4rem 3rem;max-width:1200px;margin:0 auto;position:relative;z-index:1;">
+  <div class="stats-bar reveal">
+    <div class="stat-item"><div class="stat-num">₹30L Cr</div><div class="stat-desc">Annual Credit Gap<br>in Indian MSMEs</div></div>
+    <div class="stat-item"><div class="stat-num">6.19Cr</div><div class="stat-desc">Unbanked Businesses<br>across India</div></div>
+    <div class="stat-item"><div class="stat-num">94%</div><div class="stat-desc">Rejected by traditional<br>banking systems</div></div>
+    <div class="stat-item"><div class="stat-num">24hr</div><div class="stat-desc">Average disbursement<br>after approval</div></div>
+  </div>
+</div>
+
+<div class="feature-strip">
+  <div class="feature-scroll">
+    <div class="feature-item">B2B Trade Intelligence</div>
+    <div class="feature-item">GST Filing Analytics</div>
+    <div class="feature-item">UPI Velocity Scoring</div>
+    <div class="feature-item">Bank Passbook AI</div>
+    <div class="feature-item">Real-Time Risk Profiling</div>
+    <div class="feature-item">NBFC Pre-Approval</div>
+    <div class="feature-item">Vendor Marketplace</div>
+    <div class="feature-item">Location Intelligence</div>
+    <div class="feature-item">B2B Trade Intelligence</div>
+    <div class="feature-item">GST Filing Analytics</div>
+    <div class="feature-item">UPI Velocity Scoring</div>
+    <div class="feature-item">Bank Passbook AI</div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="section-label reveal">Platform Architecture</div>
+  <div class="section-title reveal">Three steps to <br>institutional credit</div>
+  <div class="flow-grid reveal">
+    <div class="flow-item">
+      <span class="flow-num">01</span>
+      <span class="flow-icon">📊</span>
+      <div class="flow-title">Upload Trade Data</div>
+      <p class="flow-text">Vendors submit invoices, delivery records & payment history. Kirana owners upload bank passbooks, UPI statements, or GST returns. Our AI extracts structured intelligence.</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">02</span>
+      <span class="flow-icon">🧠</span>
+      <div class="flow-title">AI Scoring Engine</div>
+      <p class="flow-text">Our TradeScore model evaluates 47+ alternative data signals — payment velocity, trade volume growth, GST compliance, seasonal patterns — to generate a 300-900 institutional grade.</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">03</span>
+      <span class="flow-icon">💳</span>
+      <div class="flow-title">Credit Pre-Approval</div>
+      <p class="flow-text">Scores above 550 trigger pre-approval flows via our NBFC partner network. Disbursement in 24 hours, zero collateral, working capital credit lines up to ₹25L.</p>
+    </div>
+  </div>
+</section>
+
+<section id="users">
+  <div class="section-label reveal">Who It's Built For</div>
+  <div class="section-title reveal">Two sides of<br>Bharat's supply chain</div>
+  <div class="user-grid reveal">
+    <div class="user-card vendor">
+      <span class="user-card-icon">🏭</span>
+      <div class="user-card-title">Distributors & Vendors</div>
+      <p class="user-card-sub">Manufacturers, distributors, and FMCG vendors who supply to kirana networks. Grow your credit-backed B2B sales with confidence.</p>
+      <ul class="user-card-features">
+        <li><span class="check">✓</span> Score your buyer network</li>
+        <li><span class="check">✓</span> Set credit limits automatically</li>
+        <li><span class="check">✓</span> Discover verified kirana stores</li>
+        <li><span class="check">✓</span> Track invoice payment behavior</li>
+        <li><span class="check">✓</span> Get paid on time, every time</li>
+      </ul>
+      <a href="register.html?type=vendor" class="user-card-cta">Join as Vendor →</a>
+    </div>
+    <div class="user-card kirana">
+      <span class="user-card-icon">🏪</span>
+      <div class="user-card-title">Kirana Store Owners</div>
+      <p class="user-card-sub">Independent retailers, FMCG shops, medical stores, and micro-enterprises who need working capital but have no formal credit history.</p>
+      <ul class="user-card-features">
+        <li><span class="check">✓</span> Build your first credit score</li>
+        <li><span class="check">✓</span> Access working capital loans</li>
+        <li><span class="check">✓</span> Find trusted supplier network</li>
+        <li><span class="check">✓</span> Upload passbook for verification</li>
+        <li><span class="check">✓</span> No collateral, no guarantor</li>
+      </ul>
+      <a href="register.html?type=kirana" class="user-card-cta">Join as Store →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label reveal">What They Say</div>
+  <div class="section-title reveal">Built for the<br>people of Bharat</div>
+  <div class="proof-grid reveal">
+    <div class="proof-card">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"Mere paas koi bank account nahi tha. VyaparSetu ne meri dukaan ki UPI history se credit score banaya aur 3 lakh ka loan dila diya."</p>
+      <div class="proof-author"><div class="proof-avatar">RS</div><div><div class="proof-name">Ramesh Sharma</div><div class="proof-role">Kirana Store, Lucknow</div></div></div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"We distribute to 2,000 kiranas in Maharashtra. VyaparSetu helps us score each buyer and set credit terms automatically. Our NPAs dropped 60%."</p>
+      <div class="proof-author"><div class="proof-avatar">PD</div><div><div class="proof-name">Priya Desai</div><div class="proof-role">Distributor, Pune</div></div></div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"Game changer for India's informal economy. The TradeScore system is more accurate than CIBIL for this segment. Partnered with 5 NBFCs in 3 months."</p>
+      <div class="proof-author"><div class="proof-avatar">AK</div><div><div class="proof-name">Atul Kumar</div><div class="proof-role">NBFC Head, Mumbai</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="section-label" style="display:inline-block;margin-bottom:1.5rem;">Ready to Begin?</div>
+  <h2 style="font-family:'Syne',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-3px;margin-bottom:1.5rem;line-height:1;">Your business has<br>a story. We score it.</h2>
+  <p style="color:var(--text-soft);font-size:18px;margin-bottom:3rem;font-weight:300;">Free assessment in 90 seconds. No documents, no branch visits.</p>
+  <a href="register.html" class="btn-primary" style="display:inline-flex;font-size:18px;padding:20px 48px;">
+    Create Free Account →
+  </a>
+</div>
+
+<footer>
+  <div class="footer-logo">Vyapar<span>Setu</span></div>
+  <div class="footer-note">© 2026 VyaparSetu · Hackfest26 · Powering Credit Inclusion</div>
+  <div class="footer-tag">National Finalist</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
