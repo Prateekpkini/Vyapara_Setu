@@ -1,426 +1,841 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Network Marketplace — VyaparSetu</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --jade:#00c896;--saffron:#ff8c00;--crimson:#e63946;
-  --bg:#070710;--bg2:#0a0a14;--bg3:#0d0d1a;
-  --border:rgba(255,255,255,0.08);
-  --text-soft:rgba(255,255,255,0.5);--text-mid:rgba(255,255,255,0.75);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#fff;min-height:100vh;}
-body::after{
-  content:'';position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,200,150,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,150,0.025) 1px,transparent 1px);
-  background-size:60px 60px;pointer-events:none;z-index:0;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Marketplace — VyaparSetu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --jade: #00c896;
+      --saffron: #ff8c00;
+      --crimson: #e63946;
+      --bg: #070710;
+      --bg2: #0a0a14;
+      --bg3: #0d0d1a;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-soft: rgba(255, 255, 255, 0.5);
+      --text-mid: rgba(255, 255, 255, 0.75);
+    }
 
-nav{
-  position:sticky;top:0;z-index:100;
-  padding:0 2.5rem;height:65px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(7,7,16,0.95);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;text-decoration:none;color:#fff;}
-.logo span{color:var(--jade);}
-.nav-right{display:flex;align-items:center;gap:1.5rem;}
-.nav-link{color:var(--text-soft);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s;}
-.nav-link:hover,.nav-link.active{color:#fff;}
-.user-pill{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);
-  border-radius:100px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;
-}
-.user-dot{width:8px;height:8px;background:var(--jade);border-radius:50%;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* PAGE */
-.page{max-width:1400px;margin:0 auto;padding:2.5rem 2rem;position:relative;z-index:1;}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+    }
 
-/* HEADER */
-.page-header{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:2rem;flex-wrap:wrap;gap:1rem;
-}
-.page-title{
-  font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;
-  letter-spacing:-2px;line-height:1;
-}
-.page-title span{color:var(--jade);}
-.page-sub{font-size:14px;color:var(--text-soft);margin-top:6px;font-weight:300;}
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 200, 150, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 150, 0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* STATS ROW */
-.mkt-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-  background:var(--border);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;margin-bottom:2rem;
-}
-.mkt-stat{
-  background:var(--bg2);padding:1.2rem 1.5rem;
-  display:flex;align-items:center;gap:12px;
-}
-.mkt-stat-icon{font-size:24px;}
-.mkt-stat-num{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--jade);}
-.mkt-stat-label{font-size:12px;color:var(--text-soft);}
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 2.5rem;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(7, 7, 16, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* FILTER BAR */
-.filter-bar{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:14px;padding:1.5rem;margin-bottom:2rem;
-  display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;
-}
-.filter-group{flex:1;min-width:150px;}
-.filter-label{font-size:11px;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
-.filter-input{
-  width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--border);
-  border-radius:8px;padding:10px 12px;font-size:13px;color:#fff;outline:none;
-  font-family:'DM Sans',sans-serif;transition:border-color 0.2s;
-}
-.filter-input:focus,.filter-input:hover{border-color:rgba(0,200,150,0.3);}
-select.filter-input option{background:#0d0d1a;}
-.filter-btn{
-  background:var(--jade);color:#000;border:none;border-radius:8px;
-  padding:11px 20px;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;
-  cursor:pointer;white-space:nowrap;transition:all 0.2s;
-}
-.filter-btn:hover{background:#00e0a8;}
-.filter-reset{
-  background:transparent;color:var(--text-soft);border:1px solid var(--border);
-  border-radius:8px;padding:11px 16px;font-size:13px;font-weight:500;
-  cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;
-}
-.filter-reset:hover{color:#fff;border-color:rgba(255,255,255,0.2);}
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #fff;
+    }
 
-/* TABS */
-.tab-row{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0;}
-.tab{
-  padding:10px 20px;font-size:13px;font-weight:600;
-  border:none;background:transparent;color:var(--text-soft);
-  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
-  transition:all 0.2s;font-family:'Syne',sans-serif;
-}
-.tab:hover{color:#fff;}
-.tab.active{color:var(--jade);border-bottom-color:var(--jade);}
+    .logo span {
+      color: var(--jade);
+    }
 
-/* GRID */
-.card-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
-  gap:1.2rem;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-/* BUSINESS CARD */
-.biz-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:16px;padding:1.5rem;
-  transition:all 0.25s;cursor:pointer;
-  position:relative;overflow:hidden;
-}
-.biz-card:hover{
-  border-color:rgba(0,200,150,0.25);
-  transform:translateY(-2px);
-  background:var(--bg3);
-}
-.biz-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  opacity:0;transition:opacity 0.2s;
-}
-.biz-card.vendor::before{background:linear-gradient(90deg,var(--jade),#00d4ff);}
-.biz-card.kirana::before{background:linear-gradient(90deg,var(--saffron),#ff4757);}
-.biz-card:hover::before{opacity:1;}
+    .nav-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
 
-.biz-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;}
-.biz-avatar{
-  width:48px;height:48px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
-}
-.biz-card.vendor .biz-avatar{background:rgba(0,200,150,0.15);color:var(--jade);}
-.biz-card.kirana .biz-avatar{background:rgba(255,140,0,0.15);color:var(--saffron);}
+    .nav-link:hover,
+    .nav-link.active {
+      color: #fff;
+    }
 
-.biz-type-badge{
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
-  padding:3px 10px;border-radius:100px;
-}
-.vendor .biz-type-badge{background:rgba(0,200,150,0.1);color:var(--jade);border:1px solid rgba(0,200,150,0.2);}
-.kirana .biz-type-badge{background:rgba(255,140,0,0.1);color:var(--saffron);border:1px solid rgba(255,140,0,0.2);}
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 200, 150, 0.1);
+      border: 1px solid rgba(0, 200, 150, 0.2);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
-.biz-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px;}
-.biz-sub{font-size:12px;color:var(--text-soft);}
+    .user-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--jade);
+      border-radius: 50%;
+    }
 
-.biz-desc{
-  font-size:13px;color:var(--text-mid);line-height:1.5;
-  margin-bottom:1rem;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
+    /* PAGE */
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
 
-.biz-score-row{
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(0,0,0,0.25);border-radius:10px;padding:12px;
-  margin-bottom:1rem;border:1px solid rgba(255,255,255,0.04);
-}
-.biz-score-num{
-  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;
-  line-height:1;
-}
-.biz-score-bar-wrap{flex:1;margin:0 12px;}
-.biz-score-bar-bg{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:4px;}
-.biz-score-bar-fill{height:100%;border-radius:2px;}
-.biz-score-range{font-size:10px;color:var(--text-soft);}
+    /* HEADER */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
-.biz-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem;}
-.biz-meta-item{text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:8px;}
-.biz-meta-val{font-size:13px;font-weight:700;}
-.biz-meta-label{font-size:10px;color:var(--text-soft);margin-top:2px;text-transform:uppercase;letter-spacing:0.04em;}
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
 
-.biz-footer{display:flex;align-items:center;justify-content:space-between;}
-.biz-location{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:5px;}
-.biz-location::before{content:'📍';}
-.connect-btn{
-  background:rgba(0,200,150,0.1);color:var(--jade);
-  border:1px solid rgba(0,200,150,0.25);border-radius:8px;
-  padding:7px 16px;font-size:12px;font-weight:700;
-  cursor:pointer;transition:all 0.2s;font-family:'Syne',sans-serif;
-}
-.connect-btn:hover{background:rgba(0,200,150,0.2);}
+    .page-title span {
+      color: var(--jade);
+    }
 
-/* NO RESULTS */
-.no-results{
-  grid-column:1/-1;text-align:center;
-  padding:4rem 2rem;color:var(--text-soft);
-}
-.no-results-icon{font-size:48px;display:block;margin-bottom:1rem;opacity:0.5;}
+    .page-sub {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-top: 6px;
+      font-weight: 300;
+    }
 
-/* MODAL */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(8px);z-index:200;display:none;
-  align-items:center;justify-content:center;padding:2rem;
-}
-.modal-overlay.open{display:flex;}
-.modal{
-  background:#0d0d1a;border:1px solid rgba(0,200,150,0.2);
-  border-radius:20px;padding:2.5rem;max-width:560px;width:100%;
-  max-height:90vh;overflow-y:auto;position:relative;
-}
-.modal-close{
-  position:absolute;top:1.5rem;right:1.5rem;
-  background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.7);
-  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;
-  display:flex;align-items:center;justify-content:center;transition:all 0.2s;
-}
-.modal-close:hover{background:rgba(255,255,255,0.15);color:#fff;}
+    /* STATS ROW */
+    .mkt-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
 
-@media(max-width:768px){
-  .mkt-stats{grid-template-columns:1fr 1fr;}
-  .filter-bar{flex-direction:column;}
-  .filter-group{min-width:100%;}
-  nav{padding:0 1.5rem;}
-  .page{padding:1.5rem 1rem;}
-}
-</style>
+    .mkt-stat {
+      background: var(--bg2);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mkt-stat-icon {
+      font-size: 24px;
+    }
+
+    .mkt-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--jade);
+    }
+
+    .mkt-stat-label {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .filter-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #fff;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .filter-input:focus,
+    .filter-input:hover {
+      border-color: rgba(0, 200, 150, 0.3);
+    }
+
+    select.filter-input option {
+      background: #0d0d1a;
+    }
+
+    .filter-btn {
+      background: var(--jade);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      background: #00e0a8;
+    }
+
+    .filter-reset {
+      background: transparent;
+      color: var(--text-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .filter-reset:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* TABS */
+    .tab-row {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .tab:hover {
+      color: #fff;
+    }
+
+    .tab.active {
+      color: var(--jade);
+      border-bottom-color: var(--jade);
+    }
+
+    /* GRID */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+    /* BUSINESS CARD */
+    .biz-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .biz-card:hover {
+      border-color: rgba(0, 200, 150, 0.25);
+      transform: translateY(-2px);
+      background: var(--bg3);
+    }
+
+    .biz-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .biz-card.vendor::before {
+      background: linear-gradient(90deg, var(--jade), #00d4ff);
+    }
+
+    .biz-card.kirana::before {
+      background: linear-gradient(90deg, var(--saffron), #ff4757);
+    }
+
+    .biz-card:hover::before {
+      opacity: 1;
+    }
+
+    .biz-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .biz-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .biz-card.vendor .biz-avatar {
+      background: rgba(0, 200, 150, 0.15);
+      color: var(--jade);
+    }
+
+    .biz-card.kirana .biz-avatar {
+      background: rgba(255, 140, 0, 0.15);
+      color: var(--saffron);
+    }
+
+    .biz-type-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .vendor .biz-type-badge {
+      background: rgba(0, 200, 150, 0.1);
+      color: var(--jade);
+      border: 1px solid rgba(0, 200, 150, 0.2);
+    }
+
+    .kirana .biz-type-badge {
+      background: rgba(255, 140, 0, 0.1);
+      color: var(--saffron);
+      border: 1px solid rgba(255, 140, 0, 0.2);
+    }
+
+    .biz-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .biz-sub {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .biz-desc {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .biz-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .biz-score-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .biz-score-bar-wrap {
+      flex: 1;
+      margin: 0 12px;
+    }
+
+    .biz-score-bar-bg {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+
+    .biz-score-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .biz-score-range {
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .biz-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .biz-meta-item {
+      text-align: center;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    .biz-meta-val {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .biz-meta-label {
+      font-size: 10px;
+      color: var(--text-soft);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .biz-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .biz-location {
+      font-size: 12px;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .biz-location::before {
+      content: '';
+    }
+
+    .connect-btn {
+      background: rgba(0, 200, 150, 0.1);
+      color: var(--jade);
+      border: 1px solid rgba(0, 200, 150, 0.25);
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .connect-btn:hover {
+      background: rgba(0, 200, 150, 0.2);
+    }
+
+    /* NO RESULTS */
+    .no-results {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-soft);
+    }
+
+    .no-results-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #0d0d1a;
+      border: 1px solid rgba(0, 200, 150, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    @media(max-width:768px) {
+      .mkt-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+      }
+
+      .filter-group {
+        min-width: 100%;
+      }
+
+      nav {
+        padding: 0 1.5rem;
+      }
+
+      .page {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<script src="data.js"></script>
+  <script src="data.js"></script>
 
-<nav>
-  <a href="index.html" class="logo">Vyapar<span>Setu</span></a>
-  <div class="nav-right">
-    <a href="marketplace.html" class="nav-link active">Network</a>
-    <a href="#" class="nav-link" id="dashboardLink">Dashboard</a>
-    <div class="user-pill" onclick="VS.logout()">
-      <div class="user-dot"></div>
-      <span id="userNameNav">Sign Out</span>
+  <nav>
+    <a href="index.html" class="logo">Vyapar<span>Setu</span></a>
+    <div class="nav-right">
+      <a href="marketplace.html" class="nav-link active">Network</a>
+      <a href="#" class="nav-link" id="dashboardLink">Dashboard</a>
+      <div class="user-pill" onclick="VS.logout()">
+        <div class="user-dot"></div>
+        <span id="userNameNav">Sign Out</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">B2B <span>Network</span></h1>
+        <p class="page-sub" id="networkSub">Discover verified vendors and kirana stores across India — filtered by
+          location and TradeScore</p>
+      </div>
+    </div>
+
+    <div class="mkt-stats">
+      <div class="mkt-stat"><span class="mkt-stat-icon">VND</span>
+        <div>
+          <div class="mkt-stat-num" id="vendorCount">—</div>
+          <div class="mkt-stat-label">Active Vendors</div>
+        </div>
+      </div>
+      <div class="mkt-stat"><span class="mkt-stat-icon">KRN</span>
+        <div>
+          <div class="mkt-stat-num" id="kiranaCount">—</div>
+          <div class="mkt-stat-label">Kirana Stores</div>
+        </div>
+      </div>
+      <div class="mkt-stat"><span class="mkt-stat-icon">AVG</span>
+        <div>
+          <div class="mkt-stat-num" id="avgScore">—</div>
+          <div class="mkt-stat-label">Avg. TradeScore</div>
+        </div>
+      </div>
+      <div class="mkt-stat"><span class="mkt-stat-icon">ST</span>
+        <div>
+          <div class="mkt-stat-num" id="stateCount">—</div>
+          <div class="mkt-stat-label">States Covered</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group" style="max-width:260px;">
+        <div class="filter-label">Search by name or city</div>
+        <input class="filter-input" type="text" id="searchInput" placeholder="e.g. Mumbai, Suresh..."
+          oninput="applyFilters()" />
+      </div>
+      <div class="filter-group" style="max-width:160px;">
+        <div class="filter-label">State</div>
+        <select class="filter-input" id="stateFilter" onchange="applyFilters()">
+          <option value="">All States</option>
+        </select>
+      </div>
+      <div class="filter-group" style="max-width:160px;">
+        <div class="filter-label">Category</div>
+        <select class="filter-input" id="categoryFilter" onchange="applyFilters()">
+          <option value="">All Categories</option>
+          <option>Kirana / FMCG Retail</option>
+          <option>FMCG Distributor</option>
+          <option>Wholesale Trader</option>
+          <option>Pharmacy / Healthcare</option>
+          <option>Food & Beverages</option>
+          <option>Hardware & Tools</option>
+        </select>
+      </div>
+      <div class="filter-group" style="max-width:160px;">
+        <div class="filter-label">Min. TradeScore</div>
+        <select class="filter-input" id="scoreFilter" onchange="applyFilters()">
+          <option value="0">Any Score</option>
+          <option value="700">700+ (Grade A)</option>
+          <option value="600">600+ (Grade B)</option>
+          <option value="500">500+ (Grade C)</option>
+        </select>
+      </div>
+      <div class="filter-group" style="max-width:140px;">
+        <div class="filter-label">Risk Level</div>
+        <select class="filter-input" id="riskFilter" onchange="applyFilters()">
+          <option value="">Any Risk</option>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+      <button class="filter-reset" onclick="resetFilters()">Reset</button>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab active" id="tabAll" onclick="setTab('all')">All Network</button>
+      <button class="tab" id="tabVendor" onclick="setTab('vendor')">Vendors <span id="vendorTabCount"
+          style="opacity:0.5;font-size:11px;"></span></button>
+      <button class="tab" id="tabKirana" onclick="setTab('kirana')">Kirana Stores <span id="kiranaTabCount"
+          style="opacity:0.5;font-size:11px;"></span></button>
+      <button class="tab" id="tabTopScored" onclick="setTab('top')">Top Scored ⭐</button>
+    </div>
+
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modalContent"></div>
     </div>
   </div>
-</nav>
 
-<div class="page">
-  <div class="page-header">
-    <div>
-      <h1 class="page-title">B2B <span>Network</span></h1>
-      <p class="page-sub" id="networkSub">Discover verified vendors and kirana stores across India — filtered by location and TradeScore</p>
-    </div>
-  </div>
+  <script>
+    let allUsers = [];
+    let currentTab = 'all';
+    let filters = {};
 
-  <div class="mkt-stats">
-    <div class="mkt-stat"><span class="mkt-stat-icon">🏭</span><div><div class="mkt-stat-num" id="vendorCount">—</div><div class="mkt-stat-label">Active Vendors</div></div></div>
-    <div class="mkt-stat"><span class="mkt-stat-icon">🏪</span><div><div class="mkt-stat-num" id="kiranaCount">—</div><div class="mkt-stat-label">Kirana Stores</div></div></div>
-    <div class="mkt-stat"><span class="mkt-stat-icon">⭐</span><div><div class="mkt-stat-num" id="avgScore">—</div><div class="mkt-stat-label">Avg. TradeScore</div></div></div>
-    <div class="mkt-stat"><span class="mkt-stat-icon">🌍</span><div><div class="mkt-stat-num" id="stateCount">—</div><div class="mkt-stat-label">States Covered</div></div></div>
-  </div>
+    function init() {
+      const session = VS.getSession();
+      if (session) {
+        document.getElementById('userNameNav').textContent = session.name.split(' ')[0];
+        document.getElementById('dashboardLink').href = session.type === 'vendor' ? 'dashboard_vendor.html' : 'dashboard_kirana.html';
+      }
+      allUsers = VS.getAllUsers();
 
-  <div class="filter-bar">
-    <div class="filter-group" style="max-width:260px;">
-      <div class="filter-label">Search by name or city</div>
-      <input class="filter-input" type="text" id="searchInput" placeholder="e.g. Mumbai, Suresh..." oninput="applyFilters()" />
-    </div>
-    <div class="filter-group" style="max-width:160px;">
-      <div class="filter-label">State</div>
-      <select class="filter-input" id="stateFilter" onchange="applyFilters()">
-        <option value="">All States</option>
-      </select>
-    </div>
-    <div class="filter-group" style="max-width:160px;">
-      <div class="filter-label">Category</div>
-      <select class="filter-input" id="categoryFilter" onchange="applyFilters()">
-        <option value="">All Categories</option>
-        <option>Kirana / FMCG Retail</option>
-        <option>FMCG Distributor</option>
-        <option>Wholesale Trader</option>
-        <option>Pharmacy / Healthcare</option>
-        <option>Food & Beverages</option>
-        <option>Hardware & Tools</option>
-      </select>
-    </div>
-    <div class="filter-group" style="max-width:160px;">
-      <div class="filter-label">Min. TradeScore</div>
-      <select class="filter-input" id="scoreFilter" onchange="applyFilters()">
-        <option value="0">Any Score</option>
-        <option value="700">700+ (Grade A)</option>
-        <option value="600">600+ (Grade B)</option>
-        <option value="500">500+ (Grade C)</option>
-      </select>
-    </div>
-    <div class="filter-group" style="max-width:140px;">
-      <div class="filter-label">Risk Level</div>
-      <select class="filter-input" id="riskFilter" onchange="applyFilters()">
-        <option value="">Any Risk</option>
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
-    </div>
-    <button class="filter-reset" onclick="resetFilters()">Reset</button>
-  </div>
+      // Populate states
+      const states = [...new Set(allUsers.map(u => u.state).filter(Boolean))].sort();
+      const sel = document.getElementById('stateFilter');
+      states.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        sel.appendChild(opt);
+      });
 
-  <div class="tab-row">
-    <button class="tab active" id="tabAll" onclick="setTab('all')">All Network</button>
-    <button class="tab" id="tabVendor" onclick="setTab('vendor')">Vendors <span id="vendorTabCount" style="opacity:0.5;font-size:11px;"></span></button>
-    <button class="tab" id="tabKirana" onclick="setTab('kirana')">Kirana Stores <span id="kiranaTabCount" style="opacity:0.5;font-size:11px;"></span></button>
-    <button class="tab" id="tabTopScored" onclick="setTab('top')">Top Scored ⭐</button>
-  </div>
+      updateStats();
+      applyFilters();
+    }
 
-  <div class="card-grid" id="cardGrid"></div>
-</div>
+    function updateStats() {
+      const vendors = allUsers.filter(u => u.type === 'vendor');
+      const kiranas = allUsers.filter(u => u.type === 'kirana');
+      const states = new Set(allUsers.map(u => u.state).filter(Boolean));
+      const avgScore = Math.round(allUsers.reduce((a, u) => a + (u.score || 0), 0) / allUsers.length);
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modalContent"></div>
-  </div>
-</div>
+      document.getElementById('vendorCount').textContent = vendors.length;
+      document.getElementById('kiranaCount').textContent = kiranas.length;
+      document.getElementById('avgScore').textContent = avgScore;
+      document.getElementById('stateCount').textContent = states.size;
+      document.getElementById('vendorTabCount').textContent = '(' + vendors.length + ')';
+      document.getElementById('kiranaTabCount').textContent = '(' + kiranas.length + ')';
+    }
 
-<script>
-let allUsers = [];
-let currentTab = 'all';
-let filters = {};
+    function setTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+      applyFilters();
+    }
 
-function init() {
-  const session = VS.getSession();
-  if (session) {
-    document.getElementById('userNameNav').textContent = session.name.split(' ')[0];
-    document.getElementById('dashboardLink').href = session.type === 'vendor' ? 'dashboard_vendor.html' : 'dashboard_kirana.html';
-  }
-  allUsers = VS.getAllUsers();
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const state = document.getElementById('stateFilter').value;
+      const category = document.getElementById('categoryFilter').value;
+      const minScore = parseInt(document.getElementById('scoreFilter').value) || 0;
+      const risk = document.getElementById('riskFilter').value;
 
-  // Populate states
-  const states = [...new Set(allUsers.map(u => u.state).filter(Boolean))].sort();
-  const sel = document.getElementById('stateFilter');
-  states.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = s;
-    sel.appendChild(opt);
-  });
+      let filtered = [...allUsers];
 
-  updateStats();
-  applyFilters();
-}
+      // Tab filter
+      if (currentTab === 'vendor') filtered = filtered.filter(u => u.type === 'vendor');
+      else if (currentTab === 'kirana') filtered = filtered.filter(u => u.type === 'kirana');
+      else if (currentTab === 'top') filtered = filtered.filter(u => (u.score || 0) >= 700);
 
-function updateStats() {
-  const vendors = allUsers.filter(u => u.type === 'vendor');
-  const kiranas = allUsers.filter(u => u.type === 'kirana');
-  const states = new Set(allUsers.map(u => u.state).filter(Boolean));
-  const avgScore = Math.round(allUsers.reduce((a, u) => a + (u.score || 0), 0) / allUsers.length);
+      // Apply filters
+      if (search) filtered = filtered.filter(u =>
+        u.name?.toLowerCase().includes(search) ||
+        u.business?.toLowerCase().includes(search) ||
+        u.city?.toLowerCase().includes(search) ||
+        u.category?.toLowerCase().includes(search)
+      );
+      if (state) filtered = filtered.filter(u => u.state === state);
+      if (category) filtered = filtered.filter(u => u.category === category);
+      if (minScore) filtered = filtered.filter(u => (u.score || 0) >= minScore);
+      if (risk) filtered = filtered.filter(u => u.risk === risk);
 
-  document.getElementById('vendorCount').textContent = vendors.length;
-  document.getElementById('kiranaCount').textContent = kiranas.length;
-  document.getElementById('avgScore').textContent = avgScore;
-  document.getElementById('stateCount').textContent = states.size;
-  document.getElementById('vendorTabCount').textContent = '(' + vendors.length + ')';
-  document.getElementById('kiranaTabCount').textContent = '(' + kiranas.length + ')';
-}
+      // Sort by score descending
+      filtered.sort((a, b) => (b.score || 0) - (a.score || 0));
 
-function setTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-  applyFilters();
-}
+      renderCards(filtered);
+    }
 
-function applyFilters() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  const state = document.getElementById('stateFilter').value;
-  const category = document.getElementById('categoryFilter').value;
-  const minScore = parseInt(document.getElementById('scoreFilter').value) || 0;
-  const risk = document.getElementById('riskFilter').value;
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('stateFilter').value = '';
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('scoreFilter').value = '0';
+      document.getElementById('riskFilter').value = '';
+      applyFilters();
+    }
 
-  let filtered = [...allUsers];
+    function renderCards(users) {
+      const grid = document.getElementById('cardGrid');
+      if (users.length === 0) {
+        grid.innerHTML = '<div class="no-results"><span class="no-results-icon"></span><p>No businesses match your filters.<br><a href="#" onclick="resetFilters()" style="color:var(--jade);">Clear filters</a></p></div>';
+        return;
+      }
 
-  // Tab filter
-  if (currentTab === 'vendor') filtered = filtered.filter(u => u.type === 'vendor');
-  else if (currentTab === 'kirana') filtered = filtered.filter(u => u.type === 'kirana');
-  else if (currentTab === 'top') filtered = filtered.filter(u => (u.score || 0) >= 700);
+      grid.innerHTML = users.map(u => {
+        const score = u.score || 400;
+        const scoreColor = score >= 700 ? '#00c896' : score >= 550 ? '#ff8c00' : '#e63946';
+        const scorePct = ((score - 300) / 600 * 100).toFixed(0);
+        const initials = u.business ? u.business.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() : 'NA';
+        const isVendor = u.type === 'vendor';
 
-  // Apply filters
-  if (search) filtered = filtered.filter(u =>
-    u.name?.toLowerCase().includes(search) ||
-    u.business?.toLowerCase().includes(search) ||
-    u.city?.toLowerCase().includes(search) ||
-    u.category?.toLowerCase().includes(search)
-  );
-  if (state) filtered = filtered.filter(u => u.state === state);
-  if (category) filtered = filtered.filter(u => u.category === category);
-  if (minScore) filtered = filtered.filter(u => (u.score || 0) >= minScore);
-  if (risk) filtered = filtered.filter(u => u.risk === risk);
-
-  // Sort by score descending
-  filtered.sort((a, b) => (b.score || 0) - (a.score || 0));
-
-  renderCards(filtered);
-}
-
-function resetFilters() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('stateFilter').value = '';
-  document.getElementById('categoryFilter').value = '';
-  document.getElementById('scoreFilter').value = '0';
-  document.getElementById('riskFilter').value = '';
-  applyFilters();
-}
-
-function renderCards(users) {
-  const grid = document.getElementById('cardGrid');
-  if (users.length === 0) {
-    grid.innerHTML = '<div class="no-results"><span class="no-results-icon">🔍</span><p>No businesses match your filters.<br><a href="#" onclick="resetFilters()" style="color:var(--jade);">Clear filters</a></p></div>';
-    return;
-  }
-
-  grid.innerHTML = users.map(u => {
-    const score = u.score || 400;
-    const scoreColor = score >= 700 ? '#00c896' : score >= 550 ? '#ff8c00' : '#e63946';
-    const scorePct = ((score - 300) / 600 * 100).toFixed(0);
-    const initials = u.business ? u.business.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase() : 'NA';
-    const isVendor = u.type === 'vendor';
-
-    return `
+        return `
     <div class="biz-card ${u.type}" onclick="openModal('${u.id}')">
       <div class="biz-card-header">
         <div style="display:flex;align-items:center;gap:12px;">
@@ -472,18 +887,18 @@ function renderCards(users) {
         <button class="connect-btn" onclick="event.stopPropagation();connectWith('${u.id}')">Connect →</button>
       </div>
     </div>`;
-  }).join('');
-}
+      }).join('');
+    }
 
-function openModal(id) {
-  const u = VS.getUserById(id);
-  if (!u) return;
-  const score = u.score || 400;
-  const scoreColor = score >= 700 ? '#00c896' : score >= 550 ? '#ff8c00' : '#e63946';
-  const scorePct = ((score - 300) / 600 * 100).toFixed(0);
-  const initials = u.business ? u.business.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase() : 'NA';
+    function openModal(id) {
+      const u = VS.getUserById(id);
+      if (!u) return;
+      const score = u.score || 400;
+      const scoreColor = score >= 700 ? '#00c896' : score >= 550 ? '#ff8c00' : '#e63946';
+      const scorePct = ((score - 300) / 600 * 100).toFixed(0);
+      const initials = u.business ? u.business.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() : 'NA';
 
-  document.getElementById('modalContent').innerHTML = `
+      document.getElementById('modalContent').innerHTML = `
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:1.5rem;">
       <div style="width:56px;height:56px;border-radius:14px;background:${u.type === 'vendor' ? 'rgba(0,200,150,0.15)' : 'rgba(255,140,0,0.15)'};display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:${u.type === 'vendor' ? '#00c896' : '#ff8c00'};">${initials}</div>
       <div>
@@ -514,12 +929,12 @@ function openModal(id) {
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem;font-size:13px;">
-      <div style="color:rgba(255,255,255,0.5);">📍 Location</div><div>${u.city}, ${u.state}</div>
-      <div style="color:rgba(255,255,255,0.5);">🏷️ Category</div><div>${u.category}</div>
-      <div style="color:rgba(255,255,255,0.5);">📞 Contact</div><div>${u.phone || 'Via platform'}</div>
-      <div style="color:rgba(255,255,255,0.5);">📈 Monthly Volume</div><div>${u.monthlyVolume || '—'}</div>
-      <div style="color:rgba(255,255,255,0.5);">✅ On-Time Rate</div><div>${u.onTimeRate || '—'}</div>
-      <div style="color:rgba(255,255,255,0.5);">📄 Docs Verified</div><div>${u.documents?.length || 0} documents</div>
+      <div style="color:rgba(255,255,255,0.5);">Location</div><div>${u.city}, ${u.state}</div>
+      <div style="color:rgba(255,255,255,0.5);">Category</div><div>${u.category}</div>
+      <div style="color:rgba(255,255,255,0.5);">Contact</div><div>${u.phone || 'Via platform'}</div>
+      <div style="color:rgba(255,255,255,0.5);">Monthly Volume</div><div>${u.monthlyVolume || '—'}</div>
+      <div style="color:rgba(255,255,255,0.5);">On-Time Rate</div><div>${u.onTimeRate || '—'}</div>
+      <div style="color:rgba(255,255,255,0.5);">Docs Verified</div><div>${u.documents?.length || 0} documents</div>
     </div>
 
     ${u.products ? `<div style="margin-bottom:1.5rem;">
@@ -531,28 +946,29 @@ function openModal(id) {
       Send Connection Request →
     </button>
   `;
-  document.getElementById('modal').classList.add('open');
-}
+      document.getElementById('modal').classList.add('open');
+    }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+    }
 
-function connectWith(id) {
-  const u = VS.getUserById(id);
-  if (!u) return;
-  const session = VS.getSession();
-  if (!session) { window.location.href = 'login.html'; return; }
-  alert(`Connection request sent to ${u.business || u.name}! They will be notified via platform message.`);
-  closeModal();
-}
+    function connectWith(id) {
+      const u = VS.getUserById(id);
+      if (!u) return;
+      const session = VS.getSession();
+      if (!session) { window.location.href = 'login.html'; return; }
+      alert(`Connection request sent to ${u.business || u.name}! They will be notified via platform message.`);
+      closeModal();
+    }
 
-// Close modal on overlay click
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+    // Close modal on overlay click
+    document.getElementById('modal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
 
-init();
-</script>
+    init();
+  </script>
 </body>
+
 </html>

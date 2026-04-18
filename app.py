@@ -1,8 +1,42 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import random
 
 app = Flask(__name__)
 CORS(app)
+
+market_twin_state = {
+    'nifty': 26120,
+    'gold': 63490,
+    'fd_rate': 7.35,
+    'nifty_change': 0,
+    'gold_change': 0,
+    'fd_change': 0,
+    'scenario': 'Stable macro twin.',
+    'anomaly': False
+}
+
+
+def update_market_twin():
+    drift = (random.random() - 0.5) * 0.8
+    market_twin_state['nifty'] = max(15000, market_twin_state['nifty'] + drift * 8)
+    market_twin_state['gold'] = max(52000, market_twin_state['gold'] + (random.random() - 0.5) * 50)
+    market_twin_state['fd_rate'] = max(6.0, min(8.5, market_twin_state['fd_rate'] + (random.random() - 0.5) * 0.03))
+    market_twin_state['nifty_change'] = ((market_twin_state['nifty'] - 26120) / 26120 * 100)
+    market_twin_state['gold_change'] = ((market_twin_state['gold'] - 63490) / 63490 * 100)
+    market_twin_state['fd_change'] = (market_twin_state['fd_rate'] - 7.35)
+    if random.random() < 0.18:
+        market_twin_state['scenario'] = 'Trap activated: sudden MCX Gold pump-and-dump. Exercise caution.'
+        market_twin_state['anomaly'] = True
+    else:
+        market_twin_state['scenario'] = 'Macro twin remains stable. Use disciplined risk rules.'
+        market_twin_state['anomaly'] = False
+    return market_twin_state
+
+@app.route('/market-twin', methods=['GET'])
+def market_twin():
+    data = update_market_twin()
+    return jsonify({'success': True, 'data': data})
 
 def calculate_trade_score(transactions):
     if not transactions:
