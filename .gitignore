@@ -69,3 +69,57 @@ coverage/
 # ========================
 *.local
 *.tsbuildinfo
+
+# ========================
+# Lock Files (root level)
+# ========================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ========================
+# Cache & Temp
+# ========================
+.cache/
+.vite/
+.temp/
+tmp/
+temp/
+*.pid
+*.seed
+*.pid.lock
+
+# ========================
+# Vite / Rollup
+# ========================
+vite.config.js.timestamp*
+vite.config.ts.timestamp*
+
+# ========================
+# Archives & Packages
+# ========================
+*.tgz
+*.tar.gz
+*.zip
+*.rar
+
+# ========================
+# Runtime Data
+# ========================
+pids/
+*.pid
+*.seed
+
+# ========================
+# Optional npm cache
+# ========================
+.npm/
+.eslintcache
+.stylelintcache
+
+# ========================
+# Serverless / Deployment
+# ========================
+.serverless/
+.netlify/
+.vercel/

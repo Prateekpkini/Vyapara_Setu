@@ -4,8 +4,8 @@ import { login } from '../utils/api';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('ramesh@yadavkirana.in');
+  const [password, setPassword] = useState('demo1234');
   const [type, setType] = useState('vendor');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);

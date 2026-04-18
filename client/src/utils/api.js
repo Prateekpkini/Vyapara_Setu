@@ -36,3 +36,28 @@ export const getCurrentUser = () => {
   const user = localStorage.getItem('user');
   return user ? JSON.parse(user) : null;
 };
+
+export const getMe = async () => {
+  const res = await api.get('/me');
+  return res.data;
+};
+
+export const getTransactions = async () => {
+  const res = await api.get('/transactions');
+  return res.data;
+};
+
+export const addTransaction = async (data) => {
+  const res = await api.post('/transactions', data);
+  return res.data;
+};
+
+export const getVendorBuyers = async () => {
+  const res = await api.get('/vendor/buyers');
+  return res.data;
+};
+
+export const getVendorStats = async () => {
+  const res = await api.get('/vendor/stats');
+  return res.data;
+};
