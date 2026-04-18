@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   onTimeRate: { type: String },
   gst: { type: String },
   documents: [{ type: String }],
+  digilockerVerified: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

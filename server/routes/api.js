@@ -158,21 +158,28 @@ router.post('/score', (req, res) => {
 // Auth Routes
 router.post('/auth/register', async (req, res) => {
   try {
-    const { name, email, password, business, phone, city, state, category, type, gst } = req.body;
-    
-    const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ error: 'User already exists' });
-    
+    const { name, email, password, business, phone, city, state, category, type, gst, digilockerVerified } = req.body;
+    if (!name || !email || !password || !business || !phone || !city || !state || !type) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    const normalizedEmail = email.toLowerCase().trim();
+    const existingUser = await User.findOne({ email: normalizedEmail });
+    if (existingUser) return res.status(400).json({ error: 'An account with this email already exists.' });
+
+    if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = type === 'vendor' ? `v${Date.now()}` : `k${Date.now()}`;
 
     const user = new User({
-      id, name, email, password: hashedPassword, business, phone, city, state, category, type, gst
+      id, name, email: normalizedEmail, password: hashedPassword,
+      business, phone, city, state, category, type, gst: gst || '',
+      digilockerVerified: digilockerVerified || false,
     });
-    
+
     await user.save();
-    
-    const token = jwt.sign({ id: user._id, type: user.type }, JWT_SECRET, { expiresIn: '1d' });
+
+    const token = jwt.sign({ id: user._id, type: user.type }, JWT_SECRET, { expiresIn: '7d' });
     res.status(201).json({ token, user: { id: user.id, email: user.email, type: user.type, name: user.name } });
   } catch (err) {
     res.status(500).json({ error: 'Server error', details: err.message });
@@ -182,23 +189,19 @@ router.post('/auth/register', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
-    
+    if (!email || !password) return res.status(400).json({ error: 'Email and password are required.' });
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) return res.status(400).json({ error: 'No account found with that email.' });
+
     const isMatch = await bcrypt.compare(password, user.password);
-    // Support plain text password for seeded test accounts
-    if (!isMatch && password !== user.password) {
-      return res.status(400).json({ error: 'Invalid credentials' });
-    }
-    
-    const token = jwt.sign({ id: user._id, type: user.type }, JWT_SECRET, { expiresIn: '1d' });
-    
-    // Convert to regular object to avoid Mongoose document issues
+    if (!isMatch) return res.status(400).json({ error: 'Incorrect password. Please try again.' });
+
+    const token = jwt.sign({ id: user._id, type: user.type }, JWT_SECRET, { expiresIn: '7d' });
+
     const userData = user.toObject();
     delete userData.password;
-    delete userData._id;
-    
+
     res.json({ token, user: userData });
   } catch (err) {
     res.status(500).json({ error: 'Server error', details: err.message });

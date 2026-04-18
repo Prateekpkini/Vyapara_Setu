@@ -1,230 +1,205 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const LandingPage = () => {
+const tickerItems = [
+  { label: 'Credit Deployed', value: '₹2.3L Cr' },
+  { label: 'Businesses Assessed', value: '47,000+' },
+  { label: 'Approval Rate', value: '89%' },
+  { label: 'Credit Decision', value: '90 Seconds' },
+  { label: 'Collateral Required', value: '0' },
+  { label: 'NBFC Partners', value: '18' },
+];
+
+const featureItems = [
+  'B2B Trade Intelligence', 'GST Filing Analytics', 'UPI Velocity Scoring',
+  'Bank Passbook AI', 'Real-Time Risk Profiling', 'NBFC Pre-Approval',
+  'Vendor Marketplace', 'Location Intelligence',
+];
+
+export default function LandingPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <>
-      
-  <div className="orb orb-1"></div>
-  <div className="orb orb-2"></div>
-  <div className="orb orb-3"></div>
+    <div style={{ position: 'relative' }}>
+      {/* Background */}
+      <div className="page-bg" />
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
 
-  <nav>
-    <div className="nav-logo">Vyapar<span>Setu</span></div>
-    <div className="nav-links">
-      <a href="#how">How It Works</a>
-      <a href="#network">Network</a>
-      <a href="#pricing">Pricing</a>
-    </div>
-    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-      <a href="/login" style={{ color: "var(--text-soft)", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Sign
-        In</a>
-      <a href="/register" className="nav-cta">Get Started →</a>
-    </div>
-  </nav>
+      {/* NAV */}
+      <nav className="vs-nav">
+        <Link to="/" className="vs-logo">Vyapar<span>Setu</span></Link>
+        <div className="vs-links">
+          <a href="#how">How It Works</a>
+          <a href="#who">Who We Serve</a>
+          <a href="#testimonials">Stories</a>
+        </div>
+        <div className="vs-nav-actions">
+          <Link to="/login" className="vs-signin">Sign In</Link>
+          <Link to="/register" className="vs-cta-btn">Get Started →</Link>
+        </div>
+      </nav>
 
-  <div className="hero">
-    <div className="hero-eyebrow">🇮🇳 &nbsp;Powering Bharat's 6.19 Crore MSMEs</div>
-    <h1>Credit Scores<br />for <em>Invisible</em><br />Businesses</h1>
-    <p className="hero-sub">VyaparSetu extracts B2B trade intelligence, GST flow & UPI velocity to unlock institutional
-      credit for businesses with zero banking history.</p>
-    <div className="hero-actions">
-      <a href="/register" className="btn-primary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-        Start Free Assessment
-      </a>
-      <a href="/marketplace" className="btn-secondary">Explore Network</a>
-    </div>
-  </div>
+      {/* HERO */}
+      <section className="vs-hero">
+        <div className="hero-badge">
+          <span className="hero-dot" />
+          🇮🇳 &nbsp;Powering Bharat's 6.19 Crore MSMEs
+        </div>
+        <h1>
+          Credit Scores<br />for <em>Invisible</em><br />Businesses
+        </h1>
+        <p className="hero-sub">
+          VyaparSetu extracts B2B trade intelligence, GST flow &amp; UPI velocity
+          to unlock institutional credit for businesses with zero banking history.
+        </p>
+        <div className="hero-actions">
+          <Link to="/register" className="btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+            Start Free Assessment
+          </Link>
+          <Link to="/marketplace" className="btn-secondary">Explore Network</Link>
+        </div>
+      </section>
 
-  <div className="ticker-wrap">
-    <div className="ticker">
-      <div className="ticker-item"><strong>₹2.3L Cr</strong> Credit Deployed</div>
-      <div className="ticker-item"><strong>47,000+</strong> Businesses Assessed</div>
-      <div className="ticker-item"><strong>89%</strong> Approval Rate</div>
-      <div className="ticker-item"><strong>90 Seconds</strong> Credit Decision</div>
-      <div className="ticker-item"><strong>0</strong> Collateral Required</div>
-      <div className="ticker-item"><strong>18 NBFC</strong> Partner Network</div>
-      <div className="ticker-item"><strong>₹2.3L Cr</strong> Credit Deployed</div>
-      <div className="ticker-item"><strong>47,000+</strong> Businesses Assessed</div>
-      <div className="ticker-item"><strong>89%</strong> Approval Rate</div>
-      <div className="ticker-item"><strong>90 Seconds</strong> Credit Decision</div>
-      <div className="ticker-item"><strong>0</strong> Collateral Required</div>
-      <div className="ticker-item"><strong>18 NBFC</strong> Partner Network</div>
-    </div>
-  </div>
-
-  <div style={{ padding: "4rem 3rem", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: "1" }}>
-    <div className="stats-bar reveal">
-      <div className="stat-item">
-        <div className="stat-num">₹30L Cr</div>
-        <div className="stat-desc">Annual Credit Gap<br />in Indian MSMEs</div>
-      </div>
-      <div className="stat-item">
-        <div className="stat-num">6.19Cr</div>
-        <div className="stat-desc">Unbanked Businesses<br />across India</div>
-      </div>
-      <div className="stat-item">
-        <div className="stat-num">94%</div>
-        <div className="stat-desc">Rejected by traditional<br />banking systems</div>
-      </div>
-      <div className="stat-item">
-        <div className="stat-num">24hr</div>
-        <div className="stat-desc">Average disbursement<br />after approval</div>
-      </div>
-    </div>
-  </div>
-
-  <div className="feature-strip">
-    <div className="feature-scroll">
-      <div className="feature-item">B2B Trade Intelligence</div>
-      <div className="feature-item">GST Filing Analytics</div>
-      <div className="feature-item">UPI Velocity Scoring</div>
-      <div className="feature-item">Bank Passbook AI</div>
-      <div className="feature-item">Real-Time Risk Profiling</div>
-      <div className="feature-item">NBFC Pre-Approval</div>
-      <div className="feature-item">Vendor Marketplace</div>
-      <div className="feature-item">Location Intelligence</div>
-      <div className="feature-item">B2B Trade Intelligence</div>
-      <div className="feature-item">GST Filing Analytics</div>
-      <div className="feature-item">UPI Velocity Scoring</div>
-      <div className="feature-item">Bank Passbook AI</div>
-    </div>
-  </div>
-
-  <section id="how">
-    <div className="section-label reveal">Platform Architecture</div>
-    <div className="section-title reveal">Three steps to <br />institutional credit</div>
-    <div className="flow-grid reveal">
-      <div className="flow-item">
-        <span className="flow-num">01</span>
-        <span className="flow-icon">📊</span>
-        <div className="flow-title">Upload Trade Data</div>
-        <p className="flow-text">Vendors submit invoices, delivery records & payment history. Kirana owners upload bank
-          passbooks, UPI statements, or GST returns. Our AI extracts structured intelligence.</p>
-      </div>
-      <div className="flow-item">
-        <span className="flow-num">02</span>
-        <span className="flow-icon">🧠</span>
-        <div className="flow-title">AI Scoring Engine</div>
-        <p className="flow-text">Our TradeScore model evaluates 47+ alternative data signals — payment velocity, trade
-          volume growth, GST compliance, seasonal patterns — to generate a 300-900 institutional grade.</p>
-      </div>
-      <div className="flow-item">
-        <span className="flow-num">03</span>
-        <span className="flow-icon">💳</span>
-        <div className="flow-title">Credit Pre-Approval</div>
-        <p className="flow-text">Scores above 550 trigger pre-approval flows via our NBFC partner network. Disbursement in
-          24 hours, zero collateral, working capital credit lines up to ₹25L.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="users">
-    <div className="section-label reveal">Who It's Built For</div>
-    <div className="section-title reveal">Two sides of<br />Bharat's supply chain</div>
-    <div className="user-grid reveal">
-      <div className="user-card vendor">
-        <span className="user-card-icon">🏭</span>
-        <div className="user-card-title">Distributors & Vendors</div>
-        <p className="user-card-sub">Manufacturers, distributors, and FMCG vendors who supply to kirana networks. Grow your
-          credit-backed B2B sales with confidence.</p>
-        <ul className="user-card-features">
-          <li><span className="check">✓</span> Score your buyer network</li>
-          <li><span className="check">✓</span> Set credit limits automatically</li>
-          <li><span className="check">✓</span> Discover verified kirana stores</li>
-          <li><span className="check">✓</span> Track invoice payment behavior</li>
-          <li><span className="check">✓</span> Get paid on time, every time</li>
-        </ul>
-        <a href="/register?type=vendor" className="user-card-cta">Join as Vendor →</a>
-      </div>
-      <div className="user-card kirana">
-        <span className="user-card-icon">🏪</span>
-        <div className="user-card-title">Kirana Store Owners</div>
-        <p className="user-card-sub">Independent retailers, FMCG shops, medical stores, and micro-enterprises who need
-          working capital but have no formal credit history.</p>
-        <ul className="user-card-features">
-          <li><span className="check">✓</span> Build your first credit score</li>
-          <li><span className="check">✓</span> Access working capital loans</li>
-          <li><span className="check">✓</span> Find trusted supplier network</li>
-          <li><span className="check">✓</span> Upload passbook for verification</li>
-          <li><span className="check">✓</span> No collateral, no guarantor</li>
-        </ul>
-        <a href="/register?type=kirana" className="user-card-cta">Join as Store →</a>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div className="section-label reveal">What They Say</div>
-    <div className="section-title reveal">Built for the<br />people of Bharat</div>
-    <div className="proof-grid reveal">
-      <div className="proof-card">
-        <div className="proof-stars">★★★★★</div>
-        <p className="proof-text">"Mere paas koi bank account nahi tha. VyaparSetu ne meri dukaan ki UPI history se credit
-          score banaya aur 3 lakh ka loan dila diya."</p>
-        <div className="proof-author">
-          <div className="proof-avatar">RS</div>
-          <div>
-            <div className="proof-name">Ramesh Sharma</div>
-            <div className="proof-role">Kirana Store, Lucknow</div>
-          </div>
+      {/* TICKER */}
+      <div className="ticker-wrap">
+        <div className="ticker">
+          {[...tickerItems, ...tickerItems].map((t, i) => (
+            <div key={i} className="ticker-item">
+              <strong>{t.value}</strong> {t.label}
+            </div>
+          ))}
         </div>
       </div>
-      <div className="proof-card">
-        <div className="proof-stars">★★★★★</div>
-        <p className="proof-text">"We distribute to 2,000 kiranas in Maharashtra. VyaparSetu helps us score each buyer and
-          set credit terms automatically. Our NPAs dropped 60%."</p>
-        <div className="proof-author">
-          <div className="proof-avatar">PD</div>
-          <div>
-            <div className="proof-name">Priya Desai</div>
-            <div className="proof-role">Distributor, Pune</div>
-          </div>
+
+      {/* STATS */}
+      <div className="stats-section">
+        <div className="stats-grid">
+          {[
+            { num: '₹30L Cr', label: 'Annual Credit Gap\nin Indian MSMEs' },
+            { num: '6.19 Cr', label: 'Unbanked Businesses\nacross India' },
+            { num: '94%', label: 'Rejected by traditional\nbanking systems' },
+            { num: '24 hr', label: 'Average disbursement\nafter approval' },
+          ].map((s, i) => (
+            <div key={i} className="stat-card">
+              <div className="stat-num">{s.num}</div>
+              <div className="stat-label" style={{ whiteSpace: 'pre-line' }}>{s.label}</div>
+            </div>
+          ))}
         </div>
       </div>
-      <div className="proof-card">
-        <div className="proof-stars">★★★★★</div>
-        <p className="proof-text">"Game changer for India's informal economy. The TradeScore system is more accurate than
-          CIBIL for this segment. Partnered with 5 NBFCs in 3 months."</p>
-        <div className="proof-author">
-          <div className="proof-avatar">AK</div>
-          <div>
-            <div className="proof-name">Atul Kumar</div>
-            <div className="proof-role">NBFC Head, Mumbai</div>
-          </div>
+
+      {/* FEATURE MARQUEE */}
+      <div className="feature-strip">
+        <div className="feature-scroll">
+          {[...featureItems, ...featureItems].map((f, i) => (
+            <div key={i} className="feature-item">{f}</div>
+          ))}
         </div>
       </div>
+
+      {/* HOW IT WORKS */}
+      <section className="vs-section" id="how">
+        <div className="section-eyebrow">Platform Architecture</div>
+        <h2 className="section-heading">Three steps to institutional credit</h2>
+        <div className="flow-grid">
+          {[
+            { step: '01', icon: '📊', title: 'Upload Trade Data', desc: 'Vendors submit invoices & payment history. Kirana owners upload bank passbooks, UPI statements, or GST returns. Our AI extracts structured intelligence.' },
+            { step: '02', icon: '🧠', title: 'AI Scoring Engine', desc: 'Our TradeScore model evaluates 47+ alternative data signals — payment velocity, trade volume growth, GST compliance — to generate a 300–900 grade.' },
+            { step: '03', icon: '💳', title: 'Credit Pre-Approval', desc: 'Scores above 550 trigger pre-approval flows via our NBFC network. Disbursement in 24 hours, zero collateral, credit lines up to ₹25L.' },
+          ].map((f, i) => (
+            <div key={i} className="flow-card">
+              <span className="flow-step">{f.step}</span>
+              <span className="flow-icon">{f.icon}</span>
+              <div className="flow-title">{f.title}</div>
+              <p className="flow-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* WHO WE SERVE */}
+      <section className="vs-section" id="who">
+        <div className="section-eyebrow">Who It's Built For</div>
+        <h2 className="section-heading">Two sides of Bharat's supply chain</h2>
+        <div className="user-grid">
+          <div className="user-card vendor">
+            <span className="uc-icon">🏭</span>
+            <div className="uc-title">Distributors &amp; Vendors</div>
+            <p className="uc-sub">Manufacturers, distributors, and FMCG vendors who supply to kirana networks. Grow your credit-backed B2B sales with confidence.</p>
+            <ul className="uc-features">
+              {['Score your buyer network', 'Set credit limits automatically', 'Discover verified kirana stores', 'Track invoice payment behavior', 'Get paid on time, every time'].map((f, i) => (
+                <li key={i}><span className="check">✓</span> {f}</li>
+              ))}
+            </ul>
+            <Link to="/register?type=vendor" className="uc-btn">Join as Vendor →</Link>
+          </div>
+          <div className="user-card kirana">
+            <span className="uc-icon">🏪</span>
+            <div className="uc-title">Kirana Store Owners</div>
+            <p className="uc-sub">Independent retailers, FMCG shops, medical stores, and micro-enterprises who need working capital but have no formal credit history.</p>
+            <ul className="uc-features">
+              {['Build your first credit score', 'Access working capital loans', 'Find trusted supplier network', 'Upload passbook for verification', 'No collateral, no guarantor'].map((f, i) => (
+                <li key={i}><span className="check">✓</span> {f}</li>
+              ))}
+            </ul>
+            <Link to="/register?type=kirana" className="uc-btn">Join as Store →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="vs-section" id="testimonials">
+        <div className="section-eyebrow">What They Say</div>
+        <h2 className="section-heading">Built for the people of Bharat</h2>
+        <div className="proof-grid">
+          {[
+            { initials: 'RS', name: 'Ramesh Sharma', role: 'Kirana Store, Lucknow', text: '"Mere paas koi bank account nahi tha. VyaparSetu ne meri dukaan ki UPI history se credit score banaya aur 3 lakh ka loan dila diya."' },
+            { initials: 'PD', name: 'Priya Desai', role: 'Distributor, Pune', text: '"We distribute to 2,000 kiranas in Maharashtra. VyaparSetu helps us score each buyer and set credit terms automatically. Our NPAs dropped 60%."' },
+            { initials: 'AK', name: 'Atul Kumar', role: 'NBFC Head, Mumbai', text: '"Game changer for India\'s informal economy. The TradeScore system is more accurate than CIBIL for this segment. Partnered with 5 NBFCs in 3 months."' },
+          ].map((t, i) => (
+            <div key={i} className="proof-card">
+              <div className="proof-stars">★★★★★</div>
+              <p className="proof-text">{t.text}</p>
+              <div className="proof-author">
+                <div className="proof-avatar">{t.initials}</div>
+                <div>
+                  <div className="proof-name">{t.name}</div>
+                  <div className="proof-role">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <div className="cta-section">
+        <div className="section-eyebrow" style={{ display: 'inline-block', marginBottom: '1rem' }}>Ready to Begin?</div>
+        <h2>Your business has a story.<br />We score it.</h2>
+        <p>Free assessment in 90 seconds. No documents, no branch visits.</p>
+        <Link to="/register" className="btn-primary" style={{ display: 'inline-flex', fontSize: '16px', padding: '16px 44px' }}>
+          Create Free Account →
+        </Link>
+      </div>
+
+      {/* FOOTER */}
+      <footer className="vs-footer">
+        <div className="footer-logo">Vyapar<span>Setu</span></div>
+        <div className="footer-note">© 2026 VyaparSetu · Hackfest26 · Powering Credit Inclusion</div>
+        <div className="footer-tag">National Finalist</div>
+      </footer>
     </div>
-  </section>
-
-  <div className="cta-section">
-    <div className="section-label" style={{ display: "inline-block", marginBottom: "1.5rem" }}>Ready to Begin?</div>
-    <h2
-      style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(40px,6vw,72px)", fontWeight: "800", letterSpacing: "-3px", marginBottom: "1.5rem", lineHeight: "1" }}>
-      Your business has<br />a story. We score it.</h2>
-    <p style={{ color: "var(--text-soft)", fontSize: "18px", marginBottom: "3rem", fontWeight: "300" }}>Free assessment in 90 seconds.
-      No documents, no branch visits.</p>
-    <a href="/register" className="btn-primary" style={{ display: "inline-flex", fontSize: "18px", padding: "20px 48px" }}>
-      Create Free Account →
-    </a>
-  </div>
-
-  <footer>
-    <div className="footer-logo">Vyapar<span>Setu</span></div>
-    <div className="footer-note">© 2026 VyaparSetu · Hackfest26 · Powering Credit Inclusion</div>
-    <div className="footer-tag">National Finalist</div>
-  </footer>
-
-  
-
-    </>
   );
-};
-
-export default LandingPage;
+}

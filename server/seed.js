@@ -214,14 +214,14 @@ mongoose.connect('mongodb://localhost:27017/vyaparasetu')
   .then(async () => {
     console.log('Connected to MongoDB. Clearing existing users...');
     await User.deleteMany({});
-    
+
     console.log('Seeding mock users...');
     for (const u of TRIAL_DATA) {
       const hashedPassword = await bcrypt.hash(u.password, 10);
       const userDoc = new User({ ...u, password: hashedPassword });
       await userDoc.save();
     }
-    
+
     console.log('Seeding complete!');
     mongoose.disconnect();
   })
