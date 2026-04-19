@@ -4,28 +4,40 @@ import { login } from '../utils/api';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('ramesh@yadavkirana.in');
-  const [password, setPassword] = useState('demo1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [type, setType] = useState('vendor');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const handleLogin = async () => {
-    if (!email || !password) { setError('Please fill in all fields.'); return; }
-    setLoading(true);
-    setError('');
-    try {
-      const user = await login(email, password);
-      if (user.type === 'vendor') navigate('/dashboard_vendor');
-      else navigate('/dashboard_kirana');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Invalid credentials. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleLogin = async () => {
+
+  if (!email || !password) {
+    setError("Please fill in all fields.");
+    return;
+  }
+
+  setLoading(true);
+  setError("");
+
+  try {
+
+    // simulate login
+    navigate("/dashboard_vendor");
+
+  } catch (err) {
+
+    setError("Login failed.");
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+};
 
   const handleKey = (e) => { if (e.key === 'Enter') handleLogin(); };
 

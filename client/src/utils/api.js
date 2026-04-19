@@ -1,63 +1,71 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = "http://localhost:5000/api";
 
 export const api = axios.create({
   baseURL: API_URL,
+  withCredentials: true
 });
 
+// Attach token automatically
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
 
+
+// LOGIN
 export const login = async (email, password) => {
-  const res = await api.post('/auth/login', { email, password });
-  localStorage.setItem('token', res.data.token);
-  localStorage.setItem('user', JSON.stringify(res.data.user));
-  return res.data.user;
+
+  const res = await api.post("/login", {
+    email,
+    password
+  });
+
+  const { token, user } = res.data;
+
+  if (token) {
+    localStorage.setItem("token", token);
+  }
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  return user;
 };
 
+
+// REGISTER
 export const register = async (userData) => {
-  const res = await api.post('/auth/register', userData);
-  localStorage.setItem('token', res.data.token);
-  localStorage.setItem('user', JSON.stringify(res.data.user));
-  return res.data.user;
+
+  const res = await api.post("/register", userData);
+
+  const { token, user } = res.data;
+
+  if (token) {
+    localStorage.setItem("token", token);
+  }
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  return user;
 };
 
+
+// LOGOUT
 export const logout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  window.location.href = '/login';
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "/login";
 };
 
+
+// GET CURRENT USER
 export const getCurrentUser = () => {
-  const user = localStorage.getItem('user');
+  const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
-};
-
-export const getMe = async () => {
-  const res = await api.get('/me');
-  return res.data;
-};
-
-export const getTransactions = async () => {
-  const res = await api.get('/transactions');
-  return res.data;
-};
-
-export const addTransaction = async (data) => {
-  const res = await api.post('/transactions', data);
-  return res.data;
-};
-
-export const getVendorBuyers = async () => {
-  const res = await api.get('/vendor/buyers');
-  return res.data;
-};
-
-export const getVendorStats = async () => {
-  const res = await api.get('/vendor/stats');
-  return res.data;
 };
